@@ -55,13 +55,13 @@
             Menu_View = new ToolStripMenuItem();
             Menu_VWordWrap = new ToolStripMenuItem();
             Menu_Status = new ToolStripMenuItem();
+            Menu_Dark = new ToolStripMenuItem();
             Menu_Help = new ToolStripMenuItem();
             Menu_GitHub = new ToolStripMenuItem();
             Menu_About = new ToolStripMenuItem();
             Status_Main = new StatusStrip();
             Status_Coords = new ToolStripStatusLabel();
             TxBx_Main = new TextBox();
-            Menu_Dark = new ToolStripMenuItem();
             Menu_Main.SuspendLayout();
             Status_Main.SuspendLayout();
             SuspendLayout();
@@ -88,6 +88,7 @@
             Menu_New.ShortcutKeys = Keys.Control | Keys.N;
             Menu_New.Size = new Size(155, 22);
             Menu_New.Text = "New";
+            Menu_New.Click += Menu_New_Click;
             // 
             // Menu_Open
             // 
@@ -95,6 +96,7 @@
             Menu_Open.ShortcutKeys = Keys.Control | Keys.O;
             Menu_Open.Size = new Size(155, 22);
             Menu_Open.Text = "Open...";
+            Menu_Open.Click += Menu_Open_Click;
             // 
             // Menu_Save
             // 
@@ -102,12 +104,14 @@
             Menu_Save.ShortcutKeys = Keys.Control | Keys.S;
             Menu_Save.Size = new Size(155, 22);
             Menu_Save.Text = "Save";
+            Menu_Save.Click += Menu_Save_Click;
             // 
             // Menu_SaveAs
             // 
             Menu_SaveAs.Name = "Menu_SaveAs";
             Menu_SaveAs.Size = new Size(155, 22);
             Menu_SaveAs.Text = "Save As...";
+            Menu_SaveAs.Click += Menu_SaveAs_Click;
             // 
             // toolStripMenuItem1
             // 
@@ -119,6 +123,7 @@
             Menu_PageSetup.Name = "Menu_PageSetup";
             Menu_PageSetup.Size = new Size(155, 22);
             Menu_PageSetup.Text = "Page Setup";
+            Menu_PageSetup.Click += Menu_PageSetup_Click;
             // 
             // Menu_Print
             // 
@@ -126,6 +131,7 @@
             Menu_Print.ShortcutKeys = Keys.Control | Keys.P;
             Menu_Print.Size = new Size(155, 22);
             Menu_Print.Text = "Print";
+            Menu_Print.Click += Menu_Print_Click;
             // 
             // toolStripMenuItem2
             // 
@@ -137,6 +143,7 @@
             Menu_Exit.Name = "Menu_Exit";
             Menu_Exit.Size = new Size(155, 22);
             Menu_Exit.Text = "Exit";
+            Menu_Exit.Click += Menu_Exit_Click;
             // 
             // Menu_Edit
             // 
@@ -151,6 +158,7 @@
             Menu_Undo.ShortcutKeys = Keys.Control | Keys.Z;
             Menu_Undo.Size = new Size(167, 22);
             Menu_Undo.Text = "Undo";
+            Menu_Undo.Click += Menu_Undo_Click;
             // 
             // toolStripMenuItem3
             // 
@@ -163,6 +171,7 @@
             Menu_Cut.ShortcutKeys = Keys.Control | Keys.X;
             Menu_Cut.Size = new Size(167, 22);
             Menu_Cut.Text = "Cut";
+            Menu_Cut.Click += Menu_Cut_Click;
             // 
             // Menu_Copy
             // 
@@ -170,6 +179,7 @@
             Menu_Copy.ShortcutKeys = Keys.Control | Keys.C;
             Menu_Copy.Size = new Size(167, 22);
             Menu_Copy.Text = "Copy";
+            Menu_Copy.Click += Menu_Copy_Click;
             // 
             // Menu_Paste
             // 
@@ -177,6 +187,7 @@
             Menu_Paste.ShortcutKeys = Keys.Control | Keys.V;
             Menu_Paste.Size = new Size(167, 22);
             Menu_Paste.Text = "Paste";
+            Menu_Paste.Click += Menu_Paste_Click;
             // 
             // toolStripMenuItem4
             // 
@@ -189,6 +200,7 @@
             Menu_Find.ShortcutKeys = Keys.Control | Keys.F;
             Menu_Find.Size = new Size(167, 22);
             Menu_Find.Text = "Find...";
+            Menu_Find.Click += Menu_Find_Click;
             // 
             // Menu_FindNext
             // 
@@ -196,6 +208,7 @@
             Menu_FindNext.ShortcutKeys = Keys.F3;
             Menu_FindNext.Size = new Size(167, 22);
             Menu_FindNext.Text = "Find Next";
+            Menu_FindNext.Click += Menu_FindNext_Click;
             // 
             // Menu_Replace
             // 
@@ -203,6 +216,7 @@
             Menu_Replace.ShortcutKeys = Keys.Control | Keys.H;
             Menu_Replace.Size = new Size(167, 22);
             Menu_Replace.Text = "Replace...";
+            Menu_Replace.Click += Menu_Replace_Click;
             // 
             // Menu_Format
             // 
@@ -214,14 +228,16 @@
             // Menu_FWordWrap
             // 
             Menu_FWordWrap.Name = "Menu_FWordWrap";
-            Menu_FWordWrap.Size = new Size(180, 22);
+            Menu_FWordWrap.Size = new Size(134, 22);
             Menu_FWordWrap.Text = "Word Wrap";
+            Menu_FWordWrap.Click += Menu_WordWrap_Click;
             // 
             // Menu_Font
             // 
             Menu_Font.Name = "Menu_Font";
-            Menu_Font.Size = new Size(180, 22);
+            Menu_Font.Size = new Size(134, 22);
             Menu_Font.Text = "Font...";
+            Menu_Font.Click += Menu_Font_Click;
             // 
             // Menu_View
             // 
@@ -233,14 +249,23 @@
             // Menu_VWordWrap
             // 
             Menu_VWordWrap.Name = "Menu_VWordWrap";
-            Menu_VWordWrap.Size = new Size(180, 22);
+            Menu_VWordWrap.Size = new Size(134, 22);
             Menu_VWordWrap.Text = "Word Wrap";
+            Menu_VWordWrap.Click += Menu_WordWrap_Click;
             // 
             // Menu_Status
             // 
             Menu_Status.Name = "Menu_Status";
-            Menu_Status.Size = new Size(180, 22);
+            Menu_Status.Size = new Size(134, 22);
             Menu_Status.Text = "Status Bar";
+            Menu_Status.Click += Menu_Status_Click;
+            // 
+            // Menu_Dark
+            // 
+            Menu_Dark.Name = "Menu_Dark";
+            Menu_Dark.Size = new Size(134, 22);
+            Menu_Dark.Text = "Dark Mode";
+            Menu_Dark.Click += Menu_Dark_Click;
             // 
             // Menu_Help
             // 
@@ -252,14 +277,16 @@
             // Menu_GitHub
             // 
             Menu_GitHub.Name = "Menu_GitHub";
-            Menu_GitHub.Size = new Size(180, 22);
+            Menu_GitHub.Size = new Size(134, 22);
             Menu_GitHub.Text = "Visit Page";
+            Menu_GitHub.Click += Menu_GitHub_Click;
             // 
             // Menu_About
             // 
             Menu_About.Name = "Menu_About";
-            Menu_About.Size = new Size(180, 22);
+            Menu_About.Size = new Size(134, 22);
             Menu_About.Text = "About JPad";
+            Menu_About.Click += Menu_About_Click;
             // 
             // Status_Main
             // 
@@ -287,12 +314,7 @@
             TxBx_Main.Size = new Size(800, 404);
             TxBx_Main.TabIndex = 2;
             TxBx_Main.WordWrap = false;
-            // 
-            // Menu_Dark
-            // 
-            Menu_Dark.Name = "Menu_Dark";
-            Menu_Dark.Size = new Size(180, 22);
-            Menu_Dark.Text = "Dark Mode";
+            TxBx_Main.TextChanged += TxBx_Main_TextChanged;
             // 
             // FormJPad
             // 
@@ -305,6 +327,7 @@
             MainMenuStrip = Menu_Main;
             Name = "FormJPad";
             Text = "JPad";
+            FormClosing += FormJPad_FormClosing;
             Load += FormJPad_Load;
             Menu_Main.ResumeLayout(false);
             Menu_Main.PerformLayout();
