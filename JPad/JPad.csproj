@@ -7,6 +7,17 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>AnyCPU;x64</Platforms>
+
+
+    <AssemblyTitle>JPad</AssemblyTitle>
+    <AssemblyDescription>A classic Notepad replacement</AssemblyDescription>
+    <AssemblyCompany>Lord Wulf</AssemblyCompany>
+    <AssemblyProduct>JPad</AssemblyProduct>
+    <AssemblyCopyright>Copyright © 2025</AssemblyCopyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <InformationalVersion>1.0.0</InformationalVersion>
+
   </PropertyGroup>
 
 </Project>

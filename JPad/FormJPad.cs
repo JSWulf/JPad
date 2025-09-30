@@ -1,3 +1,21 @@
+/*======================================================================================================================================================*\
+|               .%#@+                                                                       *#%.                     ..    ..                     -*--@: |
+|              -##+@.                                      +##.                             @##                    -###*  *#@                   -+:   *+ |
+|             -###*                                      .##%*             +##%##+   -##*   =#=                   %#++%  :##%               -%=::.   .=+=|
+|            :##:                                       :#@%+          -%#*   %##.  -##%   -##.                 .##.=%  .###.             .@%+@ -+. .. -+|
+|       . -=###-                                       :###*         +##.    @##.  *##@.   @#-                 :#% #=   @##.             *@#=####:  ..=* |
+|      %#=--##:                        **          :*--###-         .*:     %##. .@###.   %#.                 *#+*#:   +#%            +#@=+=%%@#%:*- *+  |
+|         -##*           -@####=    -####*      :###%@##%                  %##. +#%##*   @#.  .%#+   .@#+.   -#@##.  .##%           =@+##@=:=#.  -@+.@.  |
+|        +##*         .%###=  ##*.%#=.-##*   . @#=  *###.  :#.            @##.:##-*##. .#%  =####=  @###@. ..###+  .@##@  :@@.        %#@*.*=%#+--=+:@   |
+|       =##@%%%%%+:-. --##-   @#-..  *#%  .%#:@#: -#*:#@ +#=             *##@##*  .##%##-    -##:.##.:##.:#%:#=   %#+##-@#*          =% +%++.+@:%@ :.@-  |
+|  -+%@###:      .+###*.##  +#@.     @#=##@- -#@*#=   :@@:               %###-      .-       -####-  +###*  .#@*##::###+          .:##=:=%=#@.:@..%+=#+. |
+|.%@=@##+            -.  *@=-         :+-     .+:                         ..                   ..     ..      ..   @#+#%          .*###+*%#:.##%*-=@*%:  |
+|                   /\                                                                                            %#% :#*      .--=###-  ..#:.#+-%#-%#:  |
+|                    \\ _____________________________________________________________________                    +#@ -#%    +#%. :..  *@@.  +=:*##:+@=-  |
+|      (O)[\\\\\\\\\\(O)#####################################################################>                  -##..#+    . :@=-     .  :=-.+=+%**%#@   |
+|                    //                                                                                         @#:+#.      .  .      ..-*+:.. -.*@.-..  |
+|                   \/                                                                                         *##@-                ..      ..::.###:    |
+\*======================================================================================================================================================*/
 using System.Windows.Forms;
 using System.IO;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -13,6 +31,12 @@ namespace JPad
             Setting.Reload();
 
             InitializeComponent();
+
+            txtFont = TxBx_Main.Font;
+
+            DarkMode = Setting.DarkMode;
+            WordWrap = Setting.WordWrap;
+            TxtFont = Setting.Font;
 
             if (args.Length > 0 && File.Exists(args[0]))
             {
@@ -30,10 +54,78 @@ namespace JPad
 
         private void FormJPad_Load(object sender, EventArgs e)
         {
-
+            Menu_Status.Checked = Status_Main.Visible;
         }
 
         #region properties
+
+        private bool darkMode = false;
+
+        public bool DarkMode
+        {
+            get { return darkMode; }
+            set { 
+                darkMode = value;
+                //bool dark = this.BackColor != Color.FromArgb(30, 30, 30); // toggle based on current color
+
+                this.BackColor = value ? Color.FromArgb(30, 30, 30) : SystemColors.Control;
+                TxBx_Main.BackColor = value ? Color.FromArgb(45, 45, 45) : SystemColors.Window;
+                TxBx_Main.ForeColor = value ? Color.Gainsboro : SystemColors.WindowText;
+                Menu_Main.BackColor = value ? Color.FromArgb(45, 45, 45) : SystemColors.Control;
+                Menu_Main.ForeColor = value ? Color.Gainsboro : SystemColors.ControlText;
+                Status_Main.BackColor = value ? Color.FromArgb(45, 45, 45) : SystemColors.Control;
+                Status_Main.ForeColor = value ? Color.Gainsboro : SystemColors.ControlText;
+
+
+                Menu_Main.BackColor = value ? Color.FromArgb(45, 45, 45) : SystemColors.Control;
+                Menu_Main.ForeColor = value ? Color.Gainsboro : SystemColors.ControlText;
+
+
+                foreach (ToolStripMenuItem item in Menu_Main.Items)
+                {
+                    item.BackColor = Menu_Main.BackColor;
+                    item.ForeColor = Menu_Main.ForeColor;
+                    foreach (ToolStripItem subItem in item.DropDownItems)
+                    {
+                        subItem.BackColor = Menu_Main.BackColor;
+                        subItem.ForeColor = Menu_Main.ForeColor;
+                    }
+                }
+
+
+                Menu_Dark.Checked = value;
+
+                Setting.DarkMode = value;
+            }
+        }
+
+        private bool wordWrap = false;
+
+        public bool WordWrap
+        {
+            get { return wordWrap; }
+            set { 
+                wordWrap = value;
+                TxBx_Main.WordWrap = value;
+                Menu_FWordWrap.Checked = value;
+                Menu_VWordWrap.Checked = value;
+
+                TxBx_Main.ScrollBars = value ? ScrollBars.Vertical : ScrollBars.Both;
+            }
+        }
+
+        private Font txtFont;
+
+        public Font TxtFont
+        {
+            get { return txtFont; }
+            set { 
+                txtFont = value;
+                TxBx_Main.Font = value;
+            }
+        }
+
+
 
         public string LoadedHash { get; private set; } = null;
 
@@ -355,14 +447,9 @@ namespace JPad
 
         private void Menu_WordWrap_Click(object sender, EventArgs e)
         {
-            TxBx_Main.WordWrap = !TxBx_Main.WordWrap;
+            WordWrap = !WordWrap;
 
-            Menu_FWordWrap.Checked = TxBx_Main.WordWrap;
-            Menu_VWordWrap.Checked = TxBx_Main.WordWrap;
-
-            TxBx_Main.ScrollBars = TxBx_Main.WordWrap ? ScrollBars.Vertical : ScrollBars.Both;
-
-            Setting.WordWrap = TxBx_Main.WordWrap;
+            Setting.WordWrap = WordWrap;
             Setting.Save();
         }
 
@@ -371,9 +458,9 @@ namespace JPad
             fontDialog.Font = TxBx_Main.Font;
             if (fontDialog.ShowDialog() == DialogResult.OK)
             {
-                TxBx_Main.Font = fontDialog.Font;
+                TxtFont = fontDialog.Font;
 
-                Setting.Font = fontDialog.Font;
+                Setting.Font = TxtFont;
                 Setting.Save();
             }
         }
@@ -386,36 +473,7 @@ namespace JPad
 
         private void Menu_Dark_Click(object sender, EventArgs e)
         {
-            bool dark = this.BackColor != Color.FromArgb(30, 30, 30); // toggle based on current color
-
-            this.BackColor = dark ? Color.FromArgb(30, 30, 30) : SystemColors.Control;
-            TxBx_Main.BackColor = dark ? Color.FromArgb(45, 45, 45) : SystemColors.Window;
-            TxBx_Main.ForeColor = dark ? Color.Gainsboro : SystemColors.WindowText;
-            Menu_Main.BackColor = dark ? Color.FromArgb(45, 45, 45) : SystemColors.Control;
-            Menu_Main.ForeColor = dark ? Color.Gainsboro : SystemColors.ControlText;
-            Status_Main.BackColor = dark ? Color.FromArgb(45, 45, 45) : SystemColors.Control;
-            Status_Main.ForeColor = dark ? Color.Gainsboro : SystemColors.ControlText;
-
-
-            Menu_Main.BackColor = dark ? Color.FromArgb(45, 45, 45) : SystemColors.Control;
-            Menu_Main.ForeColor = dark ? Color.Gainsboro : SystemColors.ControlText;
-
-
-            foreach (ToolStripMenuItem item in Menu_Main.Items)
-            {
-                item.BackColor = Menu_Main.BackColor;
-                item.ForeColor = Menu_Main.ForeColor;
-                foreach (ToolStripItem subItem in item.DropDownItems)
-                {
-                    subItem.BackColor = Menu_Main.BackColor;
-                    subItem.ForeColor = Menu_Main.ForeColor;
-                }
-            }
-
-
-            Menu_Dark.Checked = dark;
-
-            Setting.DarkMode = dark;
+            DarkMode = !DarkMode;
             Setting.Save();
         }
 

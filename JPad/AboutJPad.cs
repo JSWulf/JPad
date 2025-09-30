@@ -1,4 +1,22 @@
-﻿using System;
+﻿/*======================================================================================================================================================*\
+|               .%#@+                                                                       *#%.                     ..    ..                     -*--@: |
+|              -##+@.                                      +##.                             @##                    -###*  *#@                   -+:   *+ |
+|             -###*                                      .##%*             +##%##+   -##*   =#=                   %#++%  :##%               -%=::.   .=+=|
+|            :##:                                       :#@%+          -%#*   %##.  -##%   -##.                 .##.=%  .###.             .@%+@ -+. .. -+|
+|       . -=###-                                       :###*         +##.    @##.  *##@.   @#-                 :#% #=   @##.             *@#=####:  ..=* |
+|      %#=--##:                        **          :*--###-         .*:     %##. .@###.   %#.                 *#+*#:   +#%            +#@=+=%%@#%:*- *+  |
+|         -##*           -@####=    -####*      :###%@##%                  %##. +#%##*   @#.  .%#+   .@#+.   -#@##.  .##%           =@+##@=:=#.  -@+.@.  |
+|        +##*         .%###=  ##*.%#=.-##*   . @#=  *###.  :#.            @##.:##-*##. .#%  =####=  @###@. ..###+  .@##@  :@@.        %#@*.*=%#+--=+:@   |
+|       =##@%%%%%+:-. --##-   @#-..  *#%  .%#:@#: -#*:#@ +#=             *##@##*  .##%##-    -##:.##.:##.:#%:#=   %#+##-@#*          =% +%++.+@:%@ :.@-  |
+|  -+%@###:      .+###*.##  +#@.     @#=##@- -#@*#=   :@@:               %###-      .-       -####-  +###*  .#@*##::###+          .:##=:=%=#@.:@..%+=#+. |
+|.%@=@##+            -.  *@=-         :+-     .+:                         ..                   ..     ..      ..   @#+#%          .*###+*%#:.##%*-=@*%:  |
+|                   /\                                                                                            %#% :#*      .--=###-  ..#:.#+-%#-%#:  |
+|                    \\ _____________________________________________________________________                    +#@ -#%    +#%. :..  *@@.  +=:*##:+@=-  |
+|      (O)[\\\\\\\\\\(O)#####################################################################>                  -##..#+    . :@=-     .  :=-.+=+%**%#@   |
+|                    //                                                                                         @#:+#.      .  .      ..-*+:.. -.*@.-..  |
+|                   \/                                                                                         *##@-                ..      ..::.###:    |
+\*======================================================================================================================================================*/
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -14,12 +32,13 @@ namespace JPad
         public AboutJPad()
         {
             InitializeComponent();
-            this.Text = String.Format("About {0}", AssemblyTitle);
-            this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
-            this.labelCopyright.Text = AssemblyCopyright;
-            this.labelCompanyName.Text = AssemblyCompany;
-            this.textBoxDescription.Text = AssemblyDescription;
+            this.Text = String.Format("About {0}", Application.ProductName);
+            this.labelProductName.Text = Application.ProductName;
+            this.labelVersion.Text = String.Format("Version {0}", "1.0.0.0");
+            this.labelCopyright.Text = "Copyright © 2025";
+            this.labelCompanyName.Text = "Lord Wulf";
+            this.textBoxDescription.Text = "A no-tracking replacement for Notepad.\r\nFor more information, visit the GitHub page." +
+                "\r\n\r\n Distrubuted under the AGPL License.";
         }
 
         #region Assembly Attribute Accessors
