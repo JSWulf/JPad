@@ -1,7 +1,8 @@
-##JPad##
+## JPad
+
 JPad is a lightweight, classic-style Notepad replacement for Windows 11, built with .NET Core 8 and WinForms. It’s designed to be simple, fast, and private — with no telemetry, no ads, and no links to tracking services.
 
-##Features##
+## Features
 
 - Clean, distraction-free interface
 - Word wrap toggle
@@ -15,7 +16,7 @@ JPad is a lightweight, classic-style Notepad replacement for Windows 11, built w
 - No telemetry, analytics, or background services
 
 
-##Privacy First##
+## Privacy First
 JPad does not:
 
 - Send any data over the internet
@@ -24,7 +25,7 @@ JPad does not:
 
 All settings are stored locally in a plain-text .conf file next to the executable.
 
-##Requirements##
+## Requirements
 
 Windows 11 (or Windows 10 with .NET 8 installed)
 .NET 8 Runtime
