@@ -1,6 +1,7 @@
 using System.Windows.Forms;
 using System.IO;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Drawing.Printing;
 
 namespace JPad
 {
@@ -8,14 +9,15 @@ namespace JPad
     {
         public FormJPad(string[] args)
         {
-            InitializeComponent();
+            Setting = new Settings();
+            Setting.Reload();
 
+            InitializeComponent();
 
             if (args.Length > 0 && File.Exists(args[0]))
             {
                 Open(args[0]);
             }
-
 
             //TxBx_Main.SelectionChanged += UpdateStatusBar; //missing SelectionChanged event.
             TxBx_Main.KeyUp += UpdateStatusBar;
@@ -28,6 +30,8 @@ namespace JPad
         {
 
         }
+
+        public string LoadedHash { get; private set; } = null;
 
         private string fileName = null;
 
@@ -60,6 +64,12 @@ namespace JPad
             }
         }
 
+        public Settings Setting { get; set; }
+        private PrintDocument printDocument { get; set; } = new PrintDocument();
+        private PageSetupDialog pageSetupDialog { get; set; } = new PageSetupDialog();
+        private PrintDialog printDialog { get; set; } = new PrintDialog();
+        private FontDialog fontDialog { get; set; } = new FontDialog();
+
         private void Open(string filenm)
         {
             if (filenm == null)
@@ -69,7 +79,10 @@ namespace JPad
 
             Saved = true;
             FileName = filenm;
-            TxBx_Main.Text = File.ReadAllText(FileName);
+
+            var content = File.ReadAllText(FileName);
+            LoadedHash = GetHash(content);
+            TxBx_Main.Text = content;
 
         }
 
@@ -154,11 +167,63 @@ namespace JPad
         private void Menu_PageSetup_Click(object sender, EventArgs e)
         {
 
+            pageSetupDialog.Document = printDocument;
+            pageSetupDialog.ShowDialog();
+
         }
 
         private void Menu_Print_Click(object sender, EventArgs e)
         {
+            currentCharIndex = 0;
+            printDocument.PrintPage += PrintDocument_PrintPage;
+            printDialog.Document = printDocument;
+            if (printDialog.ShowDialog() == DialogResult.OK)
+            {
+                printDocument.Print();
+            }
 
+        }
+
+        private int currentCharIndex = 0;
+
+        private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            string text = TxBx_Main.Text;
+            Font printFont = TxBx_Main.Font;
+            float leftMargin = e.MarginBounds.Left;
+            float topMargin = e.MarginBounds.Top;
+            float height = e.MarginBounds.Height;
+
+            int charsFitted, linesFilled;
+
+            // Measure how many characters fit on the page
+            e.Graphics.MeasureString(
+                text.Substring(currentCharIndex),
+                printFont,
+                new SizeF(e.MarginBounds.Width, height),
+                StringFormat.GenericTypographic,
+                out charsFitted,
+                out linesFilled
+            );
+
+            // Draw the portion of text that fits
+            e.Graphics.DrawString(
+                text.Substring(currentCharIndex, charsFitted),
+                printFont,
+                Brushes.Black,
+                new RectangleF(leftMargin, topMargin, e.MarginBounds.Width, height),
+                StringFormat.GenericTypographic
+            );
+
+            // Update index and check if more pages are needed
+            currentCharIndex += charsFitted;
+            e.HasMorePages = currentCharIndex < text.Length;
+
+            // Reset index if printing is done
+            if (!e.HasMorePages)
+            {
+                currentCharIndex = 0;
+            }
         }
 
         private void Menu_Exit_Click(object sender, EventArgs e)
@@ -169,20 +234,39 @@ namespace JPad
         private void Menu_Undo_Click(object sender, EventArgs e)
         {
 
+            if (TxBx_Main.CanUndo)
+            {
+                TxBx_Main.Undo();
+            }
         }
 
         private void Menu_Cut_Click(object sender, EventArgs e)
         {
+
+            if (TxBx_Main.SelectionLength > 0)
+            {
+                TxBx_Main.Cut();
+            }
 
         }
 
         private void Menu_Copy_Click(object sender, EventArgs e)
         {
 
+            if (TxBx_Main.SelectionLength > 0)
+            {
+                TxBx_Main.Copy();
+            }
+
         }
 
         private void Menu_Paste_Click(object sender, EventArgs e)
         {
+
+            if (Clipboard.ContainsText())
+            {
+                TxBx_Main.Paste();
+            }
 
         }
 
@@ -213,7 +297,11 @@ namespace JPad
 
         private void Menu_Font_Click(object sender, EventArgs e)
         {
-
+            fontDialog.Font = TxBx_Main.Font;
+            if (fontDialog.ShowDialog() == DialogResult.OK)
+            {
+                TxBx_Main.Font = fontDialog.Font;
+            }
         }
 
         private void Menu_Status_Click(object sender, EventArgs e)
@@ -287,6 +375,13 @@ namespace JPad
         {
             if (!Saved && !(fileName == null && string.IsNullOrEmpty(TxBx_Main.Text)))
             {
+
+                if (FileName != null && LoadedHash == GetHash(TxBx_Main.Text))
+                {
+                    return; // no changes, skip prompt
+                }
+
+
                 var result = MessageBox.Show(
                     "You have unsaved changes. Do you want to save before exiting?",
                     "Unsaved Changes",
