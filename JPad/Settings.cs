@@ -65,37 +65,37 @@ namespace JPad
 
 
         #region Font Color
-        private string fontColorHex = "#000000";
+        //private string fontColorHex = "#000000";
 
-        public string FontColorHex
-        {
-            get { return fontColorHex; }
-            set
-            {
-                if (value.Length != 7 || !value.StartsWith('#'))
-                {
-                    throw new Exception("Invalid color - must be hexadecimal with leading '#'");
-                }
-                fontColorHex = value;
-                int r = Convert.ToInt32(value.Substring(1, 2), 16);
-                int g = Convert.ToInt32(value.Substring(3, 2), 16);
-                int b = Convert.ToInt32(value.Substring(5, 2), 16);
-                fontColor = Color.FromArgb(255, r, g, b);
-            }
-        }
+        //public string FontColorHex
+        //{
+        //    get { return fontColorHex; }
+        //    set
+        //    {
+        //        if (value.Length != 7 || !value.StartsWith('#'))
+        //        {
+        //            throw new Exception("Invalid color - must be hexadecimal with leading '#'");
+        //        }
+        //        fontColorHex = value;
+        //        int r = Convert.ToInt32(value.Substring(1, 2), 16);
+        //        int g = Convert.ToInt32(value.Substring(3, 2), 16);
+        //        int b = Convert.ToInt32(value.Substring(5, 2), 16);
+        //        fontColor = Color.FromArgb(255, r, g, b);
+        //    }
+        //}
 
 
-        private Color fontColor = Color.White;
-        [JsonIgnore]
-        public Color FontColor
-        {
-            get { return fontColor; }
-            set
-            {
-                fontColor = value;
-                fontColorHex = $"#{value.R:X2}{value.G:X2}{value.B:X2}";
-            }
-        }
+        //private Color fontColor = Color.White;
+        //[JsonIgnore]
+        //public Color FontColor
+        //{
+        //    get { return fontColor; }
+        //    set
+        //    {
+        //        fontColor = value;
+        //        fontColorHex = $"#{value.R:X2}{value.G:X2}{value.B:X2}";
+        //    }
+        //}
         #endregion
 
         #region Font
@@ -174,7 +174,7 @@ namespace JPad
         public void CopyFrom(Settings s)
         {
 
-            FontColorHex = s.FontColorHex;
+            //FontColorHex = s.FontColorHex;
             WordWrap = s.WordWrap;
             DarkMode = s.DarkMode;
             FontName = s.FontName;

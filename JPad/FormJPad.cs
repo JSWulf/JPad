@@ -293,6 +293,9 @@ namespace JPad
             Menu_VWordWrap.Checked = TxBx_Main.WordWrap;
 
             TxBx_Main.ScrollBars = TxBx_Main.WordWrap ? ScrollBars.Vertical : ScrollBars.Both;
+
+            Setting.WordWrap = TxBx_Main.WordWrap;
+            Setting.Save();
         }
 
         private void Menu_Font_Click(object sender, EventArgs e)
@@ -301,6 +304,9 @@ namespace JPad
             if (fontDialog.ShowDialog() == DialogResult.OK)
             {
                 TxBx_Main.Font = fontDialog.Font;
+
+                Setting.Font = fontDialog.Font;
+                Setting.Save();
             }
         }
 
@@ -340,6 +346,9 @@ namespace JPad
 
 
             Menu_Dark.Checked = dark;
+
+            Setting.DarkMode = dark;
+            Setting.Save();
         }
 
         private void Menu_GitHub_Click(object sender, EventArgs e)
