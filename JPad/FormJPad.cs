@@ -23,13 +23,17 @@ namespace JPad
             TxBx_Main.KeyUp += UpdateStatusBar;
             TxBx_Main.MouseUp += UpdateStatusBar;
 
-
+            FindRDialog.Btn_Next.Click += Menu_FindNext_Click;
+            FindRDialog.Btn_Replace.Click += Menu_FindNext_Click;
+            FindRDialog.Btn_RepAll.Click += Menu_FindNext_Click;
         }
 
         private void FormJPad_Load(object sender, EventArgs e)
         {
 
         }
+
+        #region properties
 
         public string LoadedHash { get; private set; } = null;
 
@@ -64,11 +68,15 @@ namespace JPad
             }
         }
 
+        public FindReplace FindRDialog { get; set; } = new FindReplace();
         public Settings Setting { get; set; }
         private PrintDocument printDocument { get; set; } = new PrintDocument();
         private PageSetupDialog pageSetupDialog { get; set; } = new PageSetupDialog();
         private PrintDialog printDialog { get; set; } = new PrintDialog();
         private FontDialog fontDialog { get; set; } = new FontDialog();
+
+        #endregion
+        #region methods
 
         private void Open(string filenm)
         {
@@ -114,6 +122,27 @@ namespace JPad
             int col = index - TxBx_Main.GetFirstCharIndexOfCurrentLine();
             Status_Coords.Text = $"Ln {line + 1}, Col {col + 1}";
         }
+
+        private string ReplaceIgnoreCase(string input, string search, string replace)
+        {
+            return System.Text.RegularExpressions.Regex.Replace(
+                input,
+                System.Text.RegularExpressions.Regex.Escape(search),
+                replace,
+                System.Text.RegularExpressions.RegexOptions.IgnoreCase
+            );
+        }
+
+        private string Unescape(string input)
+        {
+            return input
+                .Replace("\\t", "\t")
+                .Replace("\\r", "\r")
+                .Replace("\\n", "\n");
+        }
+
+        #endregion
+        #region events
 
         private void Menu_New_Click(object sender, EventArgs e)
         {
@@ -272,17 +301,56 @@ namespace JPad
 
         private void Menu_Find_Click(object sender, EventArgs e)
         {
-
+            FindRDialog.FindOnly = true;
+            FindRDialog.Show();
         }
 
         private void Menu_FindNext_Click(object sender, EventArgs e)
         {
+            string search = Unescape(FindRDialog.TxBx_Find.Text);
+            string replace = Unescape(FindRDialog.TxBx_Replace.Text);
+            bool matchCase = FindRDialog.CkBx_Case.Checked;
 
+            StringComparison comparison = matchCase ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
+            int start = TxBx_Main.SelectionStart + TxBx_Main.SelectionLength;
+
+            if (sender == FindRDialog.Btn_Next || sender == Menu_FindNext)
+            {
+                int index = TxBx_Main.Text.IndexOf(search, start, comparison);
+                if (index >= 0)
+                {
+                    TxBx_Main.Select(index, search.Length);
+                    TxBx_Main.ScrollToCaret();
+                    TxBx_Main.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("Text not found.", "Find", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else if (sender == FindRDialog.Btn_Replace)
+            {
+                if (TxBx_Main.SelectedText.Equals(search, comparison))
+                {
+                    TxBx_Main.SelectedText = replace;
+                }
+                Menu_FindNext_Click(FindRDialog.Btn_Next, EventArgs.Empty); // move to next
+            }
+            else if (sender == FindRDialog.Btn_RepAll)
+            {
+                string content = TxBx_Main.Text;
+                string updated = matchCase
+                    ? content.Replace(search, replace)
+                    : ReplaceIgnoreCase(content, search, replace);
+
+                TxBx_Main.Text = updated;
+            }
         }
 
         private void Menu_Replace_Click(object sender, EventArgs e)
         {
-
+            FindRDialog.FindOnly = false;
+            FindRDialog.Show();
         }
 
         private void Menu_WordWrap_Click(object sender, EventArgs e)
@@ -414,5 +482,7 @@ namespace JPad
                 }
             }
         }
+
+        #endregion
     }
 }
