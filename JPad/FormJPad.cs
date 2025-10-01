@@ -20,6 +20,7 @@ using System.Windows.Forms;
 using System.IO;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Drawing.Printing;
+using System.Reflection;
 
 namespace JPad
 {
@@ -27,6 +28,12 @@ namespace JPad
     {
         public FormJPad(string[] args)
         {
+
+            var assembly = Assembly.GetExecutingAssembly();
+            using var stream = assembly.GetManifestResourceStream("JPad.JPad.ico");
+            this.Icon = new Icon(stream);
+
+
             Setting = new Settings();
             Setting.Reload();
 

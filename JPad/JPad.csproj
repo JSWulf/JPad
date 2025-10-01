@@ -8,6 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>AnyCPU;x64</Platforms>
 
+    <ApplicationIcon>JPad.ico</ApplicationIcon>
 
     <AssemblyTitle>JPad</AssemblyTitle>
     <AssemblyDescription>A classic Notepad replacement</AssemblyDescription>
@@ -19,5 +20,13 @@
     <InformationalVersion>1.0.1</InformationalVersion>
 
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="JPad.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="JPad.ico" />
+  </ItemGroup>
 
 </Project>
