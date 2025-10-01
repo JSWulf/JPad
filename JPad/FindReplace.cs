@@ -39,7 +39,7 @@ namespace JPad
 
         private void Btn_Close_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Hide();
         }
 
         private void FindOrReplace(bool f)

@@ -46,7 +46,7 @@ namespace JPad
             ReadCommentHandling = JsonCommentHandling.Skip
         };
 
-        private string configFile = "JPad.conf";
+        private string configFile = Path.Combine(Application.StartupPath, "JPad.conf");
 
         [JsonIgnore]
         public string ConfigFile

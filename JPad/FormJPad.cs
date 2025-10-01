@@ -177,12 +177,12 @@ namespace JPad
                 throw new Exception("Null File Name");
             }
 
-            Saved = true;
             FileName = filenm;
 
             var content = File.ReadAllText(FileName);
             LoadedHash = GetHash(content);
             TxBx_Main.Text = content;
+            Saved = true;
 
         }
 
@@ -394,6 +394,7 @@ namespace JPad
         private void Menu_Find_Click(object sender, EventArgs e)
         {
             FindRDialog.FindOnly = true;
+            FindRDialog.Text = "Find...";
             FindRDialog.Show();
         }
 
@@ -442,6 +443,7 @@ namespace JPad
         private void Menu_Replace_Click(object sender, EventArgs e)
         {
             FindRDialog.FindOnly = false;
+            FindRDialog.Text = "Replace...";
             FindRDialog.Show();
         }
 
@@ -455,7 +457,7 @@ namespace JPad
 
         private void Menu_Font_Click(object sender, EventArgs e)
         {
-            fontDialog.Font = TxBx_Main.Font;
+            fontDialog.Font = TxtFont;
             if (fontDialog.ShowDialog() == DialogResult.OK)
             {
                 TxtFont = fontDialog.Font;
