@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Media;
 using AvaloniaEdit;
 using System;
 using System.IO;
@@ -29,6 +30,89 @@ namespace JPadAvl
 
             ApplySettings();
         }
+
+        #region Properties
+
+        private bool darkMode = false;
+        public bool DarkMode
+        {
+            get => darkMode;
+            set
+            {
+                darkMode = value;
+
+                var bgColor = value ? Color.FromRgb(30, 30, 30) : Colors.White;
+                var editorBg = value ? Color.FromRgb(45, 45, 45) : Colors.White;
+                var editorFg = value ? Colors.Gainsboro : Colors.Black;
+
+                Background = new SolidColorBrush(bgColor);
+                textEditor.Background = new SolidColorBrush(editorBg);
+                textEditor.Foreground = new SolidColorBrush(editorFg);
+
+                Setting.DarkMode = value;
+            }
+        }
+
+        private bool wordWrap = false;
+        public bool WordWrap
+        {
+            get => wordWrap;
+            set
+            {
+                wordWrap = value;
+                textEditor.WordWrap = value;
+
+                //wordWrapMenuItem.IsChecked = value;
+                //verticalWrapMenuItem.IsChecked = value;
+            }
+        }
+
+        private FontFamily txtFont;
+        public FontFamily TxtFont
+        {
+            get => txtFont;
+            set
+            {
+                txtFont = value;
+                textEditor.FontFamily = value;
+            }
+        }
+
+        public string LoadedHash { get; private set; } = null;
+
+        private string fileName = null;
+        public string FileName
+        {
+            get => fileName;
+            set
+            {
+                fileName = value;
+                Title = $"JPad - {Path.GetFileName(value)}";
+            }
+        }
+
+        private bool saved = false;
+        public bool Saved
+        {
+            get => saved;
+            set
+            {
+                saved = value;
+                if (!value && !Title.StartsWith("*"))
+                {
+                    Title = "*" + Title;
+                }
+                else if (Title.StartsWith("*"))
+                {
+                    Title = Title.Substring(1);
+                }
+            }
+        }
+
+        public FindReplaceWindow FindRDialog { get; set; }
+        public Settings Setting { get; set; }
+
+        #endregion
 
         private void ApplySettings()
         {
