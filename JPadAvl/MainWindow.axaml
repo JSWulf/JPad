@@ -3,9 +3,11 @@
         xmlns:avaloniaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
         x:Class="JPadAvl.MainWindow"
         Title="JPadAvl"
+        HorizontalContentAlignment="Stretch" 
+        VerticalContentAlignment="Stretch"
         Width="800" Height="600">
-  
-  <DockPanel>
+
+  <DockPanel LastChildFill="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
     <!-- Menu Bar -->
     <Menu DockPanel.Dock="Top" x:Name="Menu_Main">
       <MenuItem Header="_File">
@@ -46,16 +48,13 @@
 
     <!-- Text Editor -->
     <avaloniaEdit:TextEditor x:Name="textEditor"
+                             Background="White"
+                             Foreground="Black"
+                             Height="400"
+                             IsVisible="True"
                              ShowLineNumbers="True"
                              WordWrap="True"
                              FontFamily="TxtFont" />
-                             <!--FontSize="TxtFontSizeStr"
-                             FontWeight="TxtFontWeightStr"
-                             FontStyle="TxtFontStyleStr" />-->
     
-    <!-- Status Bar -->
-    <!--<StatusBar DockPanel.Dock="Bottom" x:Name="StatusBar_Main" IsVisible="True">
-      <TextBlock Text="Ready" Margin="5"/>
-    </StatusBar>-->
   </DockPanel>
 </Window>

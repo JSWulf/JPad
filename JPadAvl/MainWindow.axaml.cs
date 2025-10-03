@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using AvaloniaEdit;
+using AvaloniaEdit.Document;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -17,6 +18,12 @@ namespace JPadAvl
         public MainWindow()
         {
             InitializeComponent();
+
+            textEditor.Document = new AvaloniaEdit.Document.TextDocument("Hello Avalonia!");
+
+            textEditor.Background = Avalonia.Media.Brushes.White;
+            textEditor.Foreground = Avalonia.Media.Brushes.Black;
+
 
             var configPath = Path.Combine(AppContext.BaseDirectory, "JPad.conf");
             if (File.Exists(configPath))
