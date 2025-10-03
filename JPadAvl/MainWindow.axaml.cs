@@ -3,6 +3,7 @@ using Avalonia.Interactivity;
 using Avalonia.Media;
 using AvaloniaEdit;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 
@@ -78,6 +79,49 @@ namespace JPadAvl
             }
         }
 
+        private float fontSize;
+
+        public float TxtFontSize
+        {
+            get { return fontSize; }
+            set { fontSize = value; }
+        }
+
+        public string TxtFontSizeStr
+        {
+            get { return fontSize.ToString(); }
+            set { fontSize = float.Parse(value); }
+        }
+
+        private FontStyle fontStyle;
+
+        public FontStyle TxtFontStyle
+        {
+            get { return fontStyle; }
+            set { fontStyle = value; }
+        }
+
+        public string TxtFontStyleStr
+        {
+            get { return fontStyle.ToString(); }
+            //set { fontStyle = Convert<FontStyle>(value); }
+        }
+
+        private FontWeight fontWeight;
+
+        public FontWeight TxtFontWeight
+        {
+            get { return fontWeight; }
+            set { fontWeight = value; }
+        }
+
+        public string TxtFontWeightStr
+        {
+            get { return fontWeight.ToString(); }
+            //set { fontWeight = value; }
+        }
+
+
         public string LoadedHash { get; private set; } = null;
 
         private string fileName = null;
@@ -108,6 +152,16 @@ namespace JPadAvl
                 }
             }
         }
+
+        //public bool ShowStatusBar
+        //{
+        //    get => StatusBar_Main.IsVisible;
+        //    set
+        //    {
+        //        StatusBar_Main.IsVisible = value;
+        //        Menu_Status.IsChecked = value;
+        //    }
+        //}
 
         public FindReplaceWindow FindRDialog { get; set; }
         public Settings Setting { get; set; }
@@ -192,6 +246,54 @@ namespace JPadAvl
             var configPath = Path.Combine(AppContext.BaseDirectory, "JPad.conf");
             var json = JsonSerializer.Serialize(settings, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(configPath, json);
+        }
+
+        private async void Copy_Click(object sender, RoutedEventArgs e)
+        {
+            var clipboard = TopLevel.GetTopLevel(this)?.Clipboard;
+            if (clipboard != null)
+                await clipboard.SetTextAsync(textEditor.SelectedText);
+        }
+
+        private async void Paste_Click(object sender, RoutedEventArgs e)
+        {
+            var clipboard = TopLevel.GetTopLevel(this)?.Clipboard;
+            if (clipboard != null)
+            {
+                var text = await clipboard.GetTextAsync();
+                if (!string.IsNullOrEmpty(text))
+                    textEditor.Document.Insert(textEditor.CaretOffset, text);
+            }
+        }
+
+        private void Cut_Click(object sender, RoutedEventArgs e)
+        {
+            Copy_Click(sender, e);
+            textEditor.Document.Remove(textEditor.SelectionStart, textEditor.SelectionLength);
+        }
+
+        private void Undo_Click(object sender, RoutedEventArgs e)
+        {
+            if (textEditor.CanUndo)
+                textEditor.Undo();
+        }
+
+        private void Redo_Click(object sender, RoutedEventArgs e)
+        {
+            if (textEditor.CanRedo)
+                textEditor.Redo();
+        }
+
+        private void VisitGitHub_Click(object sender, RoutedEventArgs e)
+        {
+            var url = "https://github.com/JSWulf/JPad";
+            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+        }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            //var aboutWindow = new AboutWindow();
+            //aboutWindow.ShowDialog(this);
         }
     }
 }

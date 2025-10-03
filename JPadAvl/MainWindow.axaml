@@ -4,19 +4,43 @@
         x:Class="JPadAvl.MainWindow"
         Title="JPadAvl"
         Width="800" Height="600">
-
+  
   <DockPanel>
     <!-- Menu Bar -->
-    <Menu DockPanel.Dock="Top">
+    <Menu DockPanel.Dock="Top" x:Name="Menu_Main">
       <MenuItem Header="_File">
+        <MenuItem Header="_New" Click=""/>
         <MenuItem Header="_Open" Click="OpenFile_Click"/>
         <MenuItem Header="_Save" Click="SaveFile_Click"/>
+        <MenuItem Header="_SaveAs" Click="SaveFile_Click"/>
+        <MenuItem Header="Page Setup..." x:Name="Menu_Page" Click=""/>
+        <MenuItem Header="_Print" Click=""/>
         <MenuItem Header="E_xit" Click="Exit_Click"/>
       </MenuItem>
       <MenuItem Header="_Edit">
-        <MenuItem Header="_Find/Replace" Click="FindReplace_Click"/>
-        <MenuItem Header="_Word Wrap" Click="ToggleWordWrap_Click"/>
-        <MenuItem Header="_Font" Click="ChangeFont_Click"/>
+        <MenuItem Header="_Undo" Click=""/>
+        <MenuItem Header="_Redo" Click=""/>
+        <MenuItem Header="_Cut" Click="Cut_Click"/>
+        <MenuItem Header="_Copy" Click="Copy_Click"/>
+        <MenuItem Header="_Paste" Click="Paste_Click"/>
+        <MenuItem Header="_Find" Click="FindReplace_Click"/>
+        <MenuItem Header="_Find Next" Click="FindReplace_Click"/>
+        <MenuItem Header="_Replace" Click="FindReplace_Click"/>
+      </MenuItem>
+
+      
+      <MenuItem Header="_Format">
+        <MenuItem Header="Word Wrap" x:Name="Menu_FWrap" Click="ToggleWordWrap_Click"/>
+        <MenuItem Header="Font..." x:Name="Menu_Font" Click="ChangeFont_Click"/>
+      </MenuItem>
+      <MenuItem Header="_View">
+        <MenuItem Header="Word Wrap" x:Name="Menu_VWrap" Click="ToggleWordWrap_Click"/>
+        <MenuItem Header="Status Bar" x:Name="Menu_Status" Click=""/>
+        <MenuItem Header="Dark Mode" x:Name="Menu_Dark" Click=""/>
+      </MenuItem>
+      <MenuItem Header="Help">
+        <MenuItem Header="Visit GitHub" Click=""/>
+        <MenuItem Header="About" Click=""/>
       </MenuItem>
     </Menu>
 
@@ -24,9 +48,14 @@
     <avaloniaEdit:TextEditor x:Name="textEditor"
                              ShowLineNumbers="True"
                              WordWrap="True"
-                             FontFamily="{Binding Font}"
-                             FontSize="{Binding FontSize}"
-                             FontWeight="{Binding Fontweight}"
-                             FontStyle="{Binding FontStyle}" />
+                             FontFamily="TxtFont" />
+                             <!--FontSize="TxtFontSizeStr"
+                             FontWeight="TxtFontWeightStr"
+                             FontStyle="TxtFontStyleStr" />-->
+    
+    <!-- Status Bar -->
+    <!--<StatusBar DockPanel.Dock="Bottom" x:Name="StatusBar_Main" IsVisible="True">
+      <TextBlock Text="Ready" Margin="5"/>
+    </StatusBar>-->
   </DockPanel>
 </Window>
