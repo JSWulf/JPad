@@ -1,0 +1,21 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="JPadAvl.FindReplaceWindow"
+        Title="Find / Replace"
+        Width="400" Height="200"
+        WindowStartupLocation="CenterOwner">
+
+  <StackPanel Margin="10" Spacing="8">
+    <TextBlock Text="Find:"/>
+    <TextBox x:Name="findBox"/>
+
+    <TextBlock Text="Replace:"/>
+    <TextBox x:Name="replaceBox"/>
+
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+      <Button Content="Find Next" Click="FindNext_Click"/>
+      <Button Content="Replace" Click="Replace_Click"/>
+      <Button Content="Replace All" Click="ReplaceAll_Click"/>
+    </StackPanel>
+  </StackPanel>
+</Window>

@@ -1,9 +1,32 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:avaloniaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
         x:Class="JPadAvl.MainWindow"
-        Title="JPadAvl">
-    Welcome to Avalonia!
+        Title="JPadAvl"
+        Width="800" Height="600">
+
+  <DockPanel>
+    <!-- Menu Bar -->
+    <Menu DockPanel.Dock="Top">
+      <MenuItem Header="_File">
+        <MenuItem Header="_Open" Click="OpenFile_Click"/>
+        <MenuItem Header="_Save" Click="SaveFile_Click"/>
+        <MenuItem Header="E_xit" Click="Exit_Click"/>
+      </MenuItem>
+      <MenuItem Header="_Edit">
+        <MenuItem Header="_Find/Replace" Click="FindReplace_Click"/>
+        <MenuItem Header="_Word Wrap" Click="ToggleWordWrap_Click"/>
+        <MenuItem Header="_Font" Click="ChangeFont_Click"/>
+      </MenuItem>
+    </Menu>
+
+    <!-- Text Editor -->
+    <avaloniaEdit:TextEditor x:Name="textEditor"
+                             ShowLineNumbers="True"
+                             WordWrap="True"
+                             FontFamily="{Binding Font}"
+                             FontSize="{Binding FontSize}"
+                             FontWeight="{Binding Fontweight}"
+                             FontStyle="{Binding FontStyle}" />
+  </DockPanel>
 </Window>

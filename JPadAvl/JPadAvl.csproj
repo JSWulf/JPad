@@ -8,9 +8,13 @@
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JPad.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.3.6" />
+    <PackageReference Include="Avalonia.AvaloniaEdit" Version="11.3.0" />
     <PackageReference Include="Avalonia.Desktop" Version="11.3.6" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.6" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.6" />
